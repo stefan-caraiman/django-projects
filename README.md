@@ -1,0 +1,1 @@
+Contains a series of mini-projects done in Django.
