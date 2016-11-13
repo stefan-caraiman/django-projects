@@ -1,16 +1,17 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
 from .models import Album
 # Create your views here.
 
 def index(request):
     all_albums = Album.objects.all()
-    html = ""
-    for album in all_albums:
-        url = "/music/%s/" % album.id
-        title = album.album_title
-        html += "<a href='%s'> %s </a><br>" % (url, title)
-    return HttpResponse(html)
+    context_data = {
+        'all_albums': all_albums,
+    }
+    return render(request, 'music/index.html', context_data)
 
 def detail(request, album_id):
-    return HttpResponse("<h2>Details for Album: %s</h2>" % album_id)
+    album = get_object_or_404(Album, pk=album_id)
+    return render(request, "music/detail.html", {'album': album})
+
+# Vid nr 22
